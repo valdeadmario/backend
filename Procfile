@@ -1,1 +1,1 @@
-web: npm start
+web: tsc && node dist/db.js && node dist/server.js
