@@ -1,14 +1,16 @@
 import * as OrderRepository from "../repositories/order.repository";
 
-import { Order, OrderRequest } from "../types/order.type";
+import { Order, OrderRequest, ErrorResponse } from "../types/order.type";
 import { getSubsetFromArray } from "../helpers/choosePizza";
 
-export const getOrdersData = async (sendRes: (data: Order[]) => any) => {
+export const getOrdersData = async (
+  sendRes: (status: number, data: Order[] | ErrorResponse) => any
+) => {
   await OrderRepository.getAllOrders(sendRes);
 };
 
 export const choosePizza = async (
-  sendRes: (data: Order) => any,
+  sendRes: (status: number, data: Order | ErrorResponse) => any,
   { members, count, pizzas }: OrderRequest
 ) => {
   const created_at = new Date();

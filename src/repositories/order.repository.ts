@@ -1,21 +1,24 @@
-import { Order } from "../types/order.type";
+import { Order, ErrorResponse } from "../types/order.type";
 
 const sqlite3 = require("sqlite3");
 
 const db = new sqlite3.Database("pizza.db");
 
-export const getAllOrders = async (sendRes: (data: Order[]) => any) => {
+export const getAllOrders = async (
+  sendRes: (status: number, data: Order[] | ErrorResponse) => any
+) => {
   const sql = "SELECT * FROM pizza_house";
   db.all(sql, (err: string, rows: Order[]) => {
     if (err) {
+      sendRes(400, { message: "Something went wrong with db" });
       return;
     }
-    sendRes(rows);
+    sendRes(200, rows);
   });
 };
 
 export const saveOrder = async (
-  sendRes: (data: Order) => any,
+  sendRes: (status: number, data: Order | ErrorResponse) => any,
   {
     members,
     taken_pizza_count,
@@ -37,9 +40,10 @@ export const saveOrder = async (
     },
     function(err: string) {
       if (err) {
+        sendRes(400, { message: "Something went wrong with db" });
         return;
       }
-      sendRes({
+      sendRes(200, {
         id: this.lastID,
         members,
         taken_pizza_count,

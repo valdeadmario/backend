@@ -13,3 +13,7 @@ export type OrderRequest = {
   count: number;
   pizzas: number[];
 };
+
+export type ErrorResponse = {
+  message: string
+}

@@ -5,7 +5,7 @@ import cors from "cors";
 
 import * as OrderService from "./services/order.service";
 
-import { Order } from "./types/order.type";
+import { Order, ErrorResponse } from "./types/order.type";
 
 const app = express();
 const port = 8080;
@@ -17,7 +17,8 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 app.get("/", (req, res) => {
-  const sendRes = (data: Order[]) => res.send(data);
+  const sendRes = (status: number, data: Order[] | ErrorResponse) =>
+    res.status(status).send(data);
   OrderService.getOrdersData(sendRes);
 });
 
@@ -28,7 +29,8 @@ app.post("/", upload.single("file"), (req, res) => {
     .split("\n")
     .join(" ")
     .split(" ");
-  const sendRes = (data: Order) => res.send(data);
+  const sendRes = (status: number, data: Order | ErrorResponse) =>
+    res.status(status).send(data);
   OrderService.choosePizza(sendRes, {
     members: Number(members),
     count: Number(count),
