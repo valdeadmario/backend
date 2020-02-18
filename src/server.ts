@@ -8,7 +8,7 @@ import * as OrderService from "./services/order.service";
 import { Order, ErrorResponse } from "./types/order.type";
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
