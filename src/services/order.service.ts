@@ -14,13 +14,13 @@ export const choosePizza = async (
   { members, count, pizzas }: OrderRequest
 ) => {
   const created_at = new Date();
-  const filtredArray = pizzas.filter((item: number) => item <= members);
+  const filteredArray = pizzas.filter((item: number) => item <= members);
   let sumArray: any[] = [];
 
   let sum = members;
-  if (filtredArray.length) {
+  if (filteredArray.length) {
     while (!sumArray.length) {
-      sumArray = [...getSubsetFromArray(filtredArray, members)];
+      sumArray = [...getSubsetFromArray(filteredArray, members)];
       if (!sumArray.length) {
         --sum;
       }
