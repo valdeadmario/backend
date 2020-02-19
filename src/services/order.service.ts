@@ -1,7 +1,7 @@
 import * as OrderRepository from "../repositories/order.repository";
 
 import { Order, OrderRequest, ErrorResponse } from "../types/order.type";
-import { getSubsetFromArray } from "../helpers/choosePizza";
+import { findSum } from "../helpers/choosePizza";
 
 export const getOrdersData = async (
   sendRes: (status: number, data: Order[] | ErrorResponse) => any
@@ -15,12 +15,15 @@ export const choosePizza = async (
 ) => {
   const created_at = new Date();
   const filteredArray = pizzas.filter((item: number) => item <= members);
+
+  const arrSum = filteredArray.reduce((acc, curr) => acc + curr, 0);
   let sumArray: any[] = [];
 
   let sum = members;
   if (filteredArray.length) {
     while (!sumArray.length) {
-      sumArray = [...getSubsetFromArray(filteredArray, members)];
+      let data = findSum(filteredArray, arrSum - sum);
+      data && sumArray.push(data);
       if (!sumArray.length) {
         --sum;
       }

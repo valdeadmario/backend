@@ -1,21 +1,34 @@
-export const getSubsetFromArray = (array: number[], sum: number) => {
-  function fork(i = 0, s = 0, t: number[] = []) {
-    if (s === sum) {
-      result.push(t);
-      return;
-    }
-    if (i === array.length) {
-      return;
-    }
-    if (s + array[i] <= sum) {
-      fork(i + 1, s + array[i], t.concat(array[i]));
-      if (result.length) {
-        return;
+export const findSum = (array: number[], value: number) => {
+  const summedValues = [];
+  let sum = 0;
+
+  for (let i = 0; i < array.length; i++) {
+    // Empty the array.
+    summedValues.splice(0, summedValues.length);
+
+    sum = array[i];
+    summedValues.push(array[i]);
+
+    for (let j = 0; j < array.length; j++) {
+      // Make sure not to use the initial value
+      if (j !== i) {
+        sum += array[j];
+        summedValues.push(array[j]);
+
+        if (sum === value) {
+          let result = array;
+          summedValues.forEach(it => {
+            result.splice(
+              result.findIndex(item => item === it),
+              1
+            );
+          });
+          return result;
+        }
+        if (sum > value) {
+          break;
+        }
       }
     }
-    fork(i + 1, s, t);
   }
-  const result: number[][] = [];
-  fork();
-  return result;
 };
