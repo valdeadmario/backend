@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "rm pizza.db && tsc && node dist/db.js && node dist/server.js",
+    "start": "tsc && node dist/db.js && node dist/server.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "dev": "nodemon dist/server.js --watch dist"

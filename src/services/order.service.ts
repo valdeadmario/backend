@@ -14,7 +14,7 @@ export const choosePizza = async (
   { members, count, pizzas }: OrderRequest
 ) => {
   const created_at = new Date();
-  const filteredArray = pizzas.filter((item: number) => item <= members);
+  const filteredArray = pizzas.filter((item: number) => item && item <= members );
 
   const arrSum = filteredArray.reduce((acc, curr) => acc + curr, 0);
   let sumArray: number[][] = [];
