@@ -4,20 +4,20 @@ import { Order, OrderRequest, ErrorResponse } from "../types/order.type";
 import { findSum } from "../helpers/choosePizza";
 
 export const getOrdersData = async (
-  sendRes: (status: number, data: Order[] | ErrorResponse) => any
+  sendRes: (status: number, data: Order[] | ErrorResponse) => void
 ) => {
   await OrderRepository.getAllOrders(sendRes);
 };
 
 export const choosePizza = async (
-  sendRes: (status: number, data: Order | ErrorResponse) => any,
+  sendRes: (status: number, data: Order | ErrorResponse) => void,
   { members, count, pizzas }: OrderRequest
 ) => {
   const created_at = new Date();
   const filteredArray = pizzas.filter((item: number) => item <= members);
 
   const arrSum = filteredArray.reduce((acc, curr) => acc + curr, 0);
-  let sumArray: any[] = [];
+  let sumArray: number[][] = [];
 
   let sum = members;
   if (filteredArray.length) {
@@ -32,7 +32,7 @@ export const choosePizza = async (
       }
     }
   } else {
-    sumArray.push(pizzas[0]);
+    sumArray.push([pizzas[0]]);
   }
   const response_at = new Date();
   await OrderRepository.saveOrder(sendRes, {

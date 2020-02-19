@@ -5,7 +5,7 @@ const sqlite3 = require("sqlite3");
 const db = new sqlite3.Database("pizza.db");
 
 export const getAllOrders = async (
-  sendRes: (status: number, data: Order[] | ErrorResponse) => any
+  sendRes: (status: number, data: Order[] | ErrorResponse) => void
 ) => {
   const sql = "SELECT * FROM pizza_house";
   db.all(sql, (err: string, rows: Order[]) => {
@@ -18,7 +18,7 @@ export const getAllOrders = async (
 };
 
 export const saveOrder = async (
-  sendRes: (status: number, data: Order | ErrorResponse) => any,
+  sendRes: (status: number, data: Order | ErrorResponse) => void,
   {
     members,
     taken_pizza_count,

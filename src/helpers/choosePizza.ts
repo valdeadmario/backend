@@ -1,6 +1,12 @@
 export const findSum = (array: number[], value: number) => {
   const summedValues = [];
   let sum = 0;
+  const hasIdx = array.findIndex(item => item === value);
+  if (hasIdx !== -1) {
+    let result = array;
+    result.splice(hasIdx, 1);
+    return result;
+  }
 
   for (let i = 0; i < array.length; i++) {
     // Empty the array.
