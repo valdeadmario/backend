@@ -22,7 +22,10 @@ export const choosePizza = async (
   let sum = members;
   if (filteredArray.length) {
     while (!sumArray.length) {
-      let data = findSum(filteredArray, arrSum - sum);
+      let data = findSum(
+        filteredArray,
+        arrSum - sum < sum ? arrSum - sum : sum
+      );
       data && sumArray.push(data);
       if (!sumArray.length) {
         --sum;
